@@ -1,5 +1,6 @@
 import express from 'express'
 import morgan from 'morgan'
+// @ts-ignore
 import pkg from '../package.json'
 import productRoutes from './routes/products.routes'
 import authRoutes from './routes/auth.routes'

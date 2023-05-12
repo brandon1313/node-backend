@@ -1,6 +1,7 @@
 import app from './app'
-import connectDB from './database'
+import { connectDB } from './database'
 
-app.listen(3000)
+app.listen(3000);
+
 connectDB()
 console.log('server listening on port', 3000)

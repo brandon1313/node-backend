@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import * as productController from '../controllers/product.controller'
-import { verifyToken, hasRole } from '../middlewares'
+import { verifyToken, hasRole } from '../middlewares/authJwt'
 
-const router = Router()
+const router: Router = Router()
 
 router.get('/', verifyToken, productController.getProducts)
 

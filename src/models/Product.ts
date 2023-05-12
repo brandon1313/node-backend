@@ -1,5 +1,11 @@
 import {Schema, model} from 'mongoose'
 
+export interface IProduct {
+    name: String,
+    category: String,
+    price: Number,
+    imgUrl: String
+}
 const productSchema = new Schema({
     name: String,
     category: String,
@@ -11,4 +17,4 @@ const productSchema = new Schema({
 })
 
 
-export default model('product', productSchema)
+export default model<IProduct>('product', productSchema)
