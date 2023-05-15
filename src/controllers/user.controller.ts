@@ -1,6 +1,9 @@
+import { Request, Response } from "express"
 import User from "../models/User"
 
-export const getUsers = async (req, res) => {
-    const users = await User.find({})
-    res.json(users)
+export class UserController {
+    getUsers = async (req: Request, res: Response): Promise<void> => {
+        const users = await User.find({})
+        res.json(users)
+    }
 }
