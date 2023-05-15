@@ -1,9 +1,20 @@
 import { Router } from 'express'
-import { signin, signup} from '../controllers/auth.controller'
+import AuthController from '../controllers/auth.controller'
 
-const router: Router = Router()
+export default class AuthRoutes{
+    public router: Router
+    private authController: AuthController
+    constructor(){
+        this.router = Router()
+        this.authController = new AuthController()
+    }
 
-router.post('/signup', signup)
-router.post('/signin', signin)
+    protected setupRoutes(): void {
+        this.router.post('/signup', this.authController.signup)
+        this.router.post('/signin', this.authController.signin)
+    }
+}
 
-export default router
+
+
+

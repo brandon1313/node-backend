@@ -2,10 +2,10 @@ import express, { Application } from 'express'
 import morgan from 'morgan'
 // @ts-ignore
 import pkg from '../package.json'
-import authRoutes from './routes/auth.routes'
 import { createRoles } from './libs/initialSetup'
 import UserRoutes from './routes/user.routes'
 import ProductRoutes from './routes/products.routes'
+import AuthRoutes from './routes/auth.routes'
 
 export class App {
     public app: Application;
@@ -20,7 +20,7 @@ export class App {
         this.app.set('info', pkg)
         this.app.use(express.json())
         this.app.use('/api/products', new ProductRoutes().router)
-        this.app.use('/api/auth', authRoutes)
+        this.app.use('/api/auth', new AuthRoutes().router)
         this.app.use('/api/users', new UserRoutes().router)
         this.app.get('/', (req, res) => {
             res.json({

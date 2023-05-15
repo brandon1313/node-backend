@@ -1,7 +1,8 @@
 import mongoose, { Schema, model } from 'mongoose'
 
-interface IRole extends mongoose.Document{
-    name: string
+export interface IRole extends mongoose.Document{
+    name: string,
+    _id: string
 }
 
 const roleSchema: Schema = new Schema({
