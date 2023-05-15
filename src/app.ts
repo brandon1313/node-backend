@@ -1,29 +1,45 @@
-import express from 'express'
+import express, { Application } from 'express'
 import morgan from 'morgan'
 // @ts-ignore
 import pkg from '../package.json'
-import productRoutes from './routes/products.routes'
 import authRoutes from './routes/auth.routes'
 import { createRoles } from './libs/initialSetup'
 import userRoutes from './routes/user.routes'
+import ProductRoutes from './routes/products.routes'
 
-const app = express()
-createRoles()
+export class App {
+    public app: Application;
+    constructor() {
+        createRoles()
+        this.app = express()
+        this.config()
+    }
 
-app.use(morgan('dev'))
+    public config(): void {
+        this.app.use(morgan('dev'))
+        this.app.set('info', pkg)
+        this.app.use(express.json())
+        this.app.use('/api/products', new ProductRoutes().router)
+        this.app.use('/api/auth', authRoutes)
+        this.app.use('/api/users', userRoutes)
+        this.app.get('/', (req, res) => {
+            res.json({
+                author: this.app.get('info').author
+            })
+        })
 
-app.set('info', pkg)
+    }
 
-app.use(express.json())
-app.use('/api/products',productRoutes)
-app.use('/api/auth',authRoutes)
-app.use('/api/users', userRoutes)
-app.get('/',(req, res) => {
-    res.json({
-        author: app.get('info').author
-    })
-})
+    public start(): void{
+        this.app.listen(3000, () => {
+            console.log('Listening to port 3000!')
+        })
+    }
+}
 
-export default app
+
+
+
+
 
 

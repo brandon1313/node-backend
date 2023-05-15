@@ -1,18 +1,27 @@
 import { Router } from 'express'
-import * as productController from '../controllers/product.controller'
+import ProductController from '../controllers/product.controller';
 import { verifyToken, hasRole } from '../middlewares/authJwt'
 
-const router: Router = Router()
+export default class ProductRoutes {
+    public router: Router
 
-router.get('/', verifyToken, productController.getProducts)
+    private productController: ProductController = new ProductController()
 
-router.post('/', verifyToken, productController.createProduct)
+    constructor() {
+        this.router = Router()
+        this.registerRoutes()
+    }
 
-router.put('/:id', [verifyToken, hasRole('moderator')], productController.updateProductById)
+    protected registerRoutes(): void {
+        this.router.get('/', verifyToken, this.productController.getProducts)
 
-router.get('/:id', verifyToken, productController.getProductById)
+        this.router.post('/', verifyToken, this.productController.createProduct)
 
-router.delete('/:id', [verifyToken, hasRole('admin')], productController.deleteProductById)
+        this.router.put('/:id', [verifyToken, hasRole('moderator')], this.productController.updateProductById)
 
+        this.router.get('/:id', verifyToken, this.productController.getProductById)
 
-export default router
+        this.router.delete('/:id', [verifyToken, hasRole('admin')], this.productController.deleteProductById)
+    }
+
+}
